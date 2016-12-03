@@ -1,7 +1,7 @@
 
-# Install Observium Community
+# Install [Observium](//www.observium.org/) Community
 
-[Observium Install Guide used to create this.](http://www.observium.org/docs/install_rhel7/)
+[Observium Install Guide used to create this.](//www.observium.org/docs/install_rhel7/)
 
 ### How To Use:
 - download this git repo to server you wish to install Observium onto
