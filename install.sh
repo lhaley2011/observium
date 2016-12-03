@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source config/observium.conf
+source observium.conf
 
 wget http://www.observium.org/observium-community-latest.tar.gz
 tar zxvf observium-community-latest.tar.gz
