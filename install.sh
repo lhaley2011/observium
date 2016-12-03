@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-source observium.conf
+source config/observium.conf
 
 wget http://www.observium.org/observium-community-latest.tar.gz
 tar zxvf observium-community-latest.tar.gz
 rm -rf observium-community-latest.tar.gz
+
+cat config/observium.config.php > /opt/observium/config.php
 
 systemctl enable mariadb
 systemctl start mariadb
@@ -16,7 +18,7 @@ mysql -u -p$MYSQL_ROOT_PASS -e \
 mkdir -p /etc/httpd/sites-enabled
 echo 'include sites-enabled/*.conf' >> /etc/httpd/conf/httpd.conf
 mkdir -p /etc/httpd/sites-available
-cat observium.httpd.conf > /etc/httpd/sites-available/default.conf
+cat config/observium.httpd.conf > /etc/httpd/sites-available/default.conf
 ln -s /etc/httpd/sites-available/default.conf /etc/httpd/sites-enabled/
 
 mkdir -p /var/rrd
@@ -33,7 +35,7 @@ chown -h apache:apache /opt/observium/logs
 
 /opt/observium/adduser.php admin $OBSERVIUM_ADMIN_PASS 10
 
-cat observium.cron > /etc/cron.d/observium
+cat config/observium.cron > /etc/cron.d/observium
 systemctl reload crond
 
 systemctl enable httpd
