@@ -4,13 +4,13 @@
 
 // Database config ---  This MUST be configured
 $config['db_extension'] = 'mysqli';
+$config['db_name']      = 'observium';
 $config['db_host']      = 'localhost';
 $config['db_user']      = 'USERNAME';
 $config['db_pass']      = 'PASSWORD';
-$config['db_name']      = 'observium';
 
 // Base directory
-#$config['install_dir'] = "/opt/observium";
+$config['install_dir'] = "/opt/observium";
 
 // Default community list to use when adding/discovering
 $config['snmp']['community'] = array("public");
