@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source "observium.conf"
+source "./observium.conf"
 
 rm -rf /opt/observium
 mkdir -p /opt/observium && cd /opt
@@ -25,7 +25,7 @@ mysqladmin -u root password "${MYSQL_ROOT_PASS}"
 mysql -u root -p"${MYSQL_ROOT_PASS}" -e "create database ${OBSERVIUM_DB};"
 mysql -u root -p"${MYSQL_ROOT_PASS}" -e "GRANT ALL PRIVILEGES ON ${OBSERVIUM_DB}.* TO ${OBSERVIUM_DB_USER}@localhost IDENTIFIED BY '${OBSERVIUM_DB_PASS}'"
 
-cat "config/observium.config.php" > "/opt/observium/config.php"
+cat "./config/observium.config.php" > "/opt/observium/config.php"
 
 mkdir /var/rrd
 ln -s /var/rrd /opt/observium/rrd
@@ -43,7 +43,7 @@ chmod 775 /var/log/observium
 mkdir -p /etc/httpd/sites-available
 mkdir -p /etc/httpd/sites-enabled
 echo "Include sites-enabled/*.conf" >> /etc/httpd/conf/httpd.conf
-cat "config/observium.httpd.conf" > "/etc/httpd/sites-available/default.conf"
+cat "./config/observium.httpd.conf" > "/etc/httpd/sites-available/default.conf"
 ln -s /etc/httpd/sites-available/default.conf /etc/httpd/sites-enabled
 
 /opt/observium/discovery.php -u
@@ -58,7 +58,7 @@ sed -i 's/enforcing/permissive/g' /etc/selinux/config /etc/selinux/config
 /opt/observium/discovery.php -h all
 /opt/observium/poller.php -h all
 
-cat "config/observium.cron" > "/etc/cron.d/observium"
+cat "./config/observium.cron" > "/etc/cron.d/observium"
 systemctl reload crond
 
 # OPTIONAL
