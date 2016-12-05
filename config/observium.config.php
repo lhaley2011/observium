@@ -12,6 +12,8 @@ $config['db_pass']      = 'PASSWORD';
 // Base directory
 $config['install_dir'] = "/opt/observium";
 
+$config['html_dir']    = "/var/www/html/observium";
+
 // Default community list to use when adding/discovering
 $config['snmp']['community'] = array("public");
 

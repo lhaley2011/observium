@@ -48,20 +48,16 @@ chown apache:apache -R /opt/observium/html/
 #echo "IncludeOptional sites-enabled/*.conf" >> /etc/httpd/conf/httpd.conf
 #cat "${DIR}/config/observium.httpd.conf" > "/etc/httpd/sites-available/default.conf"
 #ln -s /etc/httpd/sites-available/default.conf /etc/httpd/sites-enabled
-cat "${DIR}/config/observium.httpd.conf" > "/etc/httpd/conf.d/observium.conf"
+#cat "${DIR}/config/observium.httpd.conf" > "/etc/httpd/conf.d/observium.conf"
+ln -s /opt/observium/html /var/www/html/observium
 
 
 /opt/observium/discovery.php -u
+/opt/observium/adduser.php "root" "${OBSERVIUM_ADMIN_PASS}" "10"
 
 setenforce 0
 sed -i 's/enforcing/permissive/g' /etc/selinux/config /etc/selinux/config
-
-/opt/observium/adduser.php "root" "${OBSERVIUM_ADMIN_PASS}" "10"
-
-/opt/observium/add_device.php "${INIT_HOST}" "${INIT_HOST_COMMUNITY}" "v2c"
-
-/opt/observium/discovery.php -h all
-/opt/observium/poller.php -h all
+#chcon -R -u system_u -r object_r -t httpd_sys_content_t <DocumentRoot>
 
 cat "${DIR}/config/observium.cron" > "/etc/cron.d/observium"
 systemctl reload crond
@@ -78,3 +74,8 @@ systemctl start httpd
 
 firewall-cmd --permanent --zone=public --add-service=http
 firewall-cmd --reload
+
+/opt/observium/add_device.php "${INIT_HOST}" "${INIT_HOST_COMMUNITY}" "v2c"
+
+/opt/observium/discovery.php -h all
+/opt/observium/poller.php -h all
