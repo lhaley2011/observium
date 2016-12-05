@@ -40,12 +40,16 @@ chown -h apache:apache /opt/observium/logs
 chown apache:apache /var/log/observium
 chmod 775 /var/log/observium
 
+chown apache:apache -R /opt/observium/html/
+
 # if sites-available does not exist
-mkdir -p /etc/httpd/sites-available
-mkdir -p /etc/httpd/sites-enabled
-echo "IncludeOptional sites-enabled/*.conf" >> /etc/httpd/conf/httpd.conf
-cat "${DIR}/config/observium.httpd.conf" > "/etc/httpd/sites-available/default.conf"
-ln -s /etc/httpd/sites-available/default.conf /etc/httpd/sites-enabled
+#mkdir -p /etc/httpd/sites-available
+#mkdir -p /etc/httpd/sites-enabled
+#echo "IncludeOptional sites-enabled/*.conf" >> /etc/httpd/conf/httpd.conf
+#cat "${DIR}/config/observium.httpd.conf" > "/etc/httpd/sites-available/default.conf"
+#ln -s /etc/httpd/sites-available/default.conf /etc/httpd/sites-enabled
+cat "${DIR}/config/observium.httpd.conf" > "/etc/httpd/conf.d/observium.conf"
+
 
 /opt/observium/discovery.php -u
 
