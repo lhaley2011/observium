@@ -43,7 +43,7 @@ chmod 775 /var/log/observium
 # if sites-available does not exist
 mkdir -p /etc/httpd/sites-available
 mkdir -p /etc/httpd/sites-enabled
-echo "Include sites-enabled/*.conf" >> /etc/httpd/conf/httpd.conf
+echo "IncludeOptional sites-enabled/*.conf" >> /etc/httpd/conf/httpd.conf
 cat "${DIR}/config/observium.httpd.conf" > "/etc/httpd/sites-available/default.conf"
 ln -s /etc/httpd/sites-available/default.conf /etc/httpd/sites-enabled
 
