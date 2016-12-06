@@ -48,12 +48,13 @@ chown apache:apache -R /opt/observium/html/
 #echo "IncludeOptional sites-enabled/*.conf" >> /etc/httpd/conf/httpd.conf
 #cat "${DIR}/config/observium.httpd.conf" > "/etc/httpd/sites-available/default.conf"
 #ln -s /etc/httpd/sites-available/default.conf /etc/httpd/sites-enabled
-#cat "${DIR}/config/observium.httpd.conf" > "/etc/httpd/conf.d/observium.conf"
-ln -s /opt/observium/html /var/www/html/observium
+cat "${DIR}/config/observium.httpd.conf" > "/etc/httpd/conf.d/observium.conf"
+ln -s /opt/observium/html /var/www/observium_html
 
 
 /opt/observium/discovery.php -u
-/opt/observium/adduser.php "root" "${OBSERVIUM_ADMIN_PASS}" "10"
+
+/opt/observium/adduser.php "admin" "${OBSERVIUM_ADMIN_PASS}" "10"
 
 setenforce 0
 sed -i 's/enforcing/permissive/g' /etc/selinux/config /etc/selinux/config
@@ -73,6 +74,7 @@ systemctl enable httpd
 systemctl start httpd
 
 firewall-cmd --permanent --zone=public --add-service=http
+firewall-cmd --permanent --zone=public --add-port=9000/tcp
 firewall-cmd --reload
 
 /opt/observium/add_device.php "${INIT_HOST}" "${INIT_HOST_COMMUNITY}" "v2c"
