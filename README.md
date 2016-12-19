@@ -3,9 +3,6 @@
 
 [Observium Install Guide used to create this.](//www.observium.org/docs/install_rhel7/)
 
-### Known Issues
-- Apache configuration not correct. Welcome page shown instead of Observium.
-
 ### How To Use:
 - download this git repo to server you wish to install Observium onto
 - edit observium.conf with unique passwords

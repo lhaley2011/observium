@@ -28,7 +28,7 @@ mysql -u root -p"${MYSQL_ROOT_PASS}" -e "GRANT ALL PRIVILEGES ON ${OBSERVIUM_DB}
 
 cat "${DIR}/config/observium.config.php" > "/opt/observium/config.php"
 
-mkdir /var/rrd
+mkdir -p /var/rrd
 ln -s /var/rrd /opt/observium/rrd
 chown -h apache:apache /opt/observium/rrd
 chown apache:apache /var/rrd
@@ -77,7 +77,10 @@ firewall-cmd --permanent --zone=public --add-service=http
 firewall-cmd --permanent --zone=public --add-port=9000/tcp
 firewall-cmd --reload
 
-/opt/observium/add_device.php "${INIT_HOST}" "${INIT_HOST_COMMUNITY}" "v2c"
+systemctl enable snmpd
+systemctl start snmpd
+
+/opt/observium/add_device.php "localhost" "public" "v2c"
 
 /opt/observium/discovery.php -h all
 /opt/observium/poller.php -h all
