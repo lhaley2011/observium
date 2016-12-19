@@ -77,6 +77,8 @@ firewall-cmd --permanent --zone=public --add-service=http
 firewall-cmd --permanent --zone=public --add-port=9000/tcp
 firewall-cmd --reload
 
+mv "/etc/snmp/snmpd.conf" "/etc/snmp/snmpd.conf.orig"
+cat "${DIR}/config/snmpd.conf" > "/etc/snmp/snmpd.conf"
 systemctl enable snmpd
 systemctl start snmpd
 
